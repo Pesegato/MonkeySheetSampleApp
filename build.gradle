@@ -1,0 +1,40 @@
+apply plugin: 'java'
+apply plugin: 'application'
+//apply plugin: 'eclipse'
+//apply plugin: 'idea'
+
+//name = the directory name
+version = "0.1.0"
+group = "com.pesegato"
+mainClassName='sample.Main'
+applicationDefaultJvmArgs = []
+
+repositories {
+		mavenLocal()
+    jcenter()
+}
+
+def jme3 = ["v" : '[3.1,)', "g": "org.jmonkeyengine"]
+
+project(":assets") {
+    apply plugin: "java"
+
+    buildDir = rootProject.file("build/assets")
+}
+
+
+dependencies {
+
+    compile "org.jmonkeyengine:jme3-core:${jme3.v}"
+    compile "org.jmonkeyengine:jme3-desktop:${jme3.v}"
+    compile "org.jmonkeyengine:jme3-lwjgl:${jme3.v}"
+	  compile "com.pesegato:GoldMonkey:[0.1,)"
+		compile "com.pesegato:MonkeySheet:[0.1,)"
+    runtime project(':assets')
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+
