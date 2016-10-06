@@ -28,7 +28,7 @@ dependencies {
     compile "org.jmonkeyengine:jme3-core:${jme3.v}"
     compile "org.jmonkeyengine:jme3-desktop:${jme3.v}"
     compile "org.jmonkeyengine:jme3-lwjgl:${jme3.v}"
-	  compile "com.pesegato:GoldMonkey:[0.1,)"
+	  compile "com.pesegato:GoldMonkey:latest.integration"
 		compile "com.pesegato:MonkeySheet:[0.1,)"
     runtime project(':assets')
 }
