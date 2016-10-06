@@ -53,11 +53,7 @@ public class Main extends SimpleApplication {
 
     public static void main( String... args ) {
 
-        String gmPath[] = new String[]{
-                "assets/GoldMonkey/animations.xml"
-        };
-
-        Main main = new Main(new GoldMonkeyAppState(false, true, gmPath), new TestAppState());
+        Main main = new Main(new GoldMonkeyAppState(false, true, "default"), new TestAppState());
         main.start();
     }
 

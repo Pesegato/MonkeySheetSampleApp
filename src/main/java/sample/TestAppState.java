@@ -24,7 +24,7 @@ public class TestAppState extends BaseAppState {
         MonkeySheetAppState msa = new MonkeySheetAppState();
         MonkeySheetAppState.setTickDuration(GM.getFloat("anim_tick_duration"));
 
-        MSContainer container = new MSContainer("monkeyguy-anim-data");
+        MSContainer container = new MSContainer("monkey-guy");
         msa.loadAnim(container, "run");
         msa.loadAnim(container, "idle");
         Geometry geo = MSAction.createGeometry("spatial", 1f, 1f);
