@@ -6,7 +6,7 @@ apply plugin: 'application'
 //name = the directory name
 version = "0.1.0"
 group = "com.pesegato"
-mainClassName='sample.Main'
+mainClassName='batched.Main'
 applicationDefaultJvmArgs = []
 
 repositories {
