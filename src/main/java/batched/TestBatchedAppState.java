@@ -63,7 +63,7 @@ public class TestBatchedAppState extends BaseAppState {
         }
         mesh.setBuffer(TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
         mesh.setBuffer(Index, 3, BufferUtils.createIntBuffer(indexes));
-        //mesh.setBuffer(Size, 1, BufferUtils.createFloatBuffer(msPos));
+        mesh.setBuffer(TexCoord2, 1, BufferUtils.createFloatBuffer(msPos));
         mesh.updateBound();
 
 
@@ -76,20 +76,15 @@ public class TestBatchedAppState extends BaseAppState {
         msa.loadAnim(container, "idle");
         //Geometry geo = MSAction.createGeometry("spatial", 1f, 1f);
 
-        //Geometry geo = new Geometry("spatial", new Quad(256, 256));
-        Geometry geo = new Geometry("spatial", mesh);
+        Geometry geo = new Geometry("monkey", mesh);
         geo.setLocalScale(128);
-
-
-        Material mat = new Material(getApplication().getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color",ColorRGBA.Blue);
-        geo.setMaterial(mat);
 
 
         msc = new MSControl("run");
         geo.addControl(msc);
 
-        //MSMaterialControl msmc = new MSMaterialControl(getApplication().getAssetManager(), geo, container, msc);
+        MSMaterialControl msmc = new MSMaterialControl(getApplication().getAssetManager(), geo, container, msc);
+        msmc.setVertexSheetPos(true);
 
         ((SimpleApplication) getApplication()).getGuiNode().attachChild(geo);
     }
