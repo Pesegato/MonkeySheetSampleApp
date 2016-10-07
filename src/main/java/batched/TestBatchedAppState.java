@@ -84,6 +84,7 @@ public class TestBatchedAppState extends BaseAppState {
         for (int i=0;i<SIZE;i++) {
             quads[i].setSFrame(i);
         }
+        mesh.setBuffer(TexCoord2, 1, msPosBuffer);
     }
 
     @Override
