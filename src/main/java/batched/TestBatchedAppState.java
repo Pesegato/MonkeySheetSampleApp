@@ -33,9 +33,8 @@ public class TestBatchedAppState extends BaseAppState {
 
     public static int SIZE = 1;
 
-    ColorRGBA[] allMyColors = new ColorRGBA[SIZE];
     float cc[] = new float[16];
-    FloatBuffer posBuffer, colorBuffer;
+    FloatBuffer posBuffer, msPosBuffer;
     Mesh mesh;
     SpriteQuad[] quads;
 
@@ -46,24 +45,23 @@ public class TestBatchedAppState extends BaseAppState {
 
         mesh = new Mesh();
         quads = new SpriteQuad[SIZE];
-        Vector3f[] vertices = new Vector3f[4 * SIZE];
         Vector2f[] texCoord = new Vector2f[4 * SIZE];
         int[] indexes = new int[6 * SIZE];
         float[] msPos = new float[SIZE];
 
-        mesh.setBuffer(Position, 3, BufferUtils.createFloatBuffer(vertices));
+        mesh.setBuffer(Position, 3, BufferUtils.createFloatBuffer(new Vector3f[4 * SIZE]));
+        mesh.setBuffer(TexCoord2, 1, BufferUtils.createFloatBuffer(msPos));
         posBuffer = (FloatBuffer) mesh.getBuffer(Position).getData();
+        msPosBuffer = (FloatBuffer) mesh.getBuffer(TexCoord2).getData();
         for (int i = 0; i < SIZE; i++) {
             int j = i / 500;
             int k = i - j * 500;
-            quads[i]=new SpriteQuad(i, posBuffer, vertices, texCoord,indexes);
+            quads[i]=new SpriteQuad(i, posBuffer, texCoord,indexes, msPosBuffer, msPos);
             quads[i].setPosition(k , j);
-            allMyColors[i] = ColorRGBA.randomColor();
 
         }
         mesh.setBuffer(TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
         mesh.setBuffer(Index, 3, BufferUtils.createIntBuffer(indexes));
-        mesh.setBuffer(TexCoord2, 1, BufferUtils.createFloatBuffer(msPos));
         mesh.updateBound();
 
 
