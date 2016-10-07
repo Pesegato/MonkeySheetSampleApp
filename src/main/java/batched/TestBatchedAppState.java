@@ -25,7 +25,7 @@ public class TestBatchedAppState extends BaseAppState {
     float tTPF = 0;
     boolean idling = false;
 
-    public static int SIZE = 4;
+    public static int SIZE = 50000;
 
     float cc[] = new float[16];
     FloatBuffer posBuffer, msPosBuffer;
@@ -47,16 +47,15 @@ public class TestBatchedAppState extends BaseAppState {
         posBuffer = (FloatBuffer) mesh.getBuffer(Position).getData();
         msPosBuffer = (FloatBuffer) mesh.getBuffer(TexCoord2).getData();
         for (int i = 0; i < SIZE; i++) {
-            int j = i / 500;
-            int k = i - j * 500;
-            quads[i]=new SpriteQuad(i, posBuffer, texCoord,indexes, msPosBuffer);
-            quads[i].setPosition(k , j);
+            int j = i / 250;
+            int k = i - j * 250;
+            quads[i] = new SpriteQuad(i, posBuffer, texCoord, indexes, msPosBuffer);
+            quads[i].setPosition(k, j);
 
         }
         mesh.setBuffer(TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
         mesh.setBuffer(Index, 3, BufferUtils.createIntBuffer(indexes));
         mesh.updateBound();
-
 
 
         MonkeySheetAppState msa = new MonkeySheetAppState();
@@ -68,7 +67,7 @@ public class TestBatchedAppState extends BaseAppState {
         //Geometry geo = MSAction.createGeometry("spatial", 1f, 1f);
 
         Geometry geo = new Geometry("monkey", mesh);
-        geo.setLocalScale(64);
+        geo.setLocalScale(1);
 
 
         msc = new MSControl("run");
@@ -80,9 +79,12 @@ public class TestBatchedAppState extends BaseAppState {
         ((SimpleApplication) getApplication()).getGuiNode().attachChild(geo);
     }
 
+    float c = 0;
+
     public void update(float tpf) {
-        for (int i=0;i<SIZE;i++) {
-            quads[i].setSFrame(i);
+        c += (60 * tpf);
+        for (int i = 0; i < SIZE; i++) {
+            quads[i].setSFrame((int) (c + i) % 20);
         }
         mesh.setBuffer(TexCoord2, 1, msPosBuffer);
     }
