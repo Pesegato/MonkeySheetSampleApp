@@ -23,11 +23,9 @@ import static com.jme3.scene.VertexBuffer.Type.*;
 public class TestBatchedAppState extends BaseAppState {
     MSControl msc;
     float tTPF = 0;
-    boolean idling = false;
 
     public static int SIZE = 50000;
 
-    float cc[] = new float[16];
     FloatBuffer posBuffer, msPosBuffer;
     Mesh mesh;
     SpriteQuad[] quads;
@@ -67,8 +65,6 @@ public class TestBatchedAppState extends BaseAppState {
         //Geometry geo = MSAction.createGeometry("spatial", 1f, 1f);
 
         geo = new Geometry("monkey", mesh);
-        geo.setLocalScale(1);
-
 
         msc = new MSControl("run");
         geo.addControl(msc);
@@ -82,11 +78,10 @@ public class TestBatchedAppState extends BaseAppState {
     float c = 0;
 
     Geometry geo;
-    float localScale=100;
-    float time=0;
+    float localScale;
     public void update(float tpf) {
-        time+=(tpf);
-        localScale= (float) (5+24*(Math.sin(1)-Math.sin(1+time)));
+        tTPF+=(tpf);
+        localScale= (float) (5+24*(Math.sin(1)-Math.sin(1+tTPF)));
         geo.setLocalScale(localScale);
         c += (60 * tpf);
         for (int i = 0; i < SIZE; i++) {
