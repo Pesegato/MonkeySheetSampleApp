@@ -66,7 +66,7 @@ public class TestBatchedAppState extends BaseAppState {
         msa.loadAnim(container, "idle");
         //Geometry geo = MSAction.createGeometry("spatial", 1f, 1f);
 
-        Geometry geo = new Geometry("monkey", mesh);
+        geo = new Geometry("monkey", mesh);
         geo.setLocalScale(1);
 
 
@@ -81,7 +81,13 @@ public class TestBatchedAppState extends BaseAppState {
 
     float c = 0;
 
+    Geometry geo;
+    float localScale=100;
+    float time=0;
     public void update(float tpf) {
+        time+=(tpf);
+        localScale= (float) (5+24*(Math.sin(1)-Math.sin(1+time)));
+        geo.setLocalScale(localScale);
         c += (60 * tpf);
         for (int i = 0; i < SIZE; i++) {
             quads[i].setSFrame((int) (c + i) % 20);
