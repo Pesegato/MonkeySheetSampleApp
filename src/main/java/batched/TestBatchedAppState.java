@@ -3,21 +3,14 @@ package batched;
 import com.jme3.app.Application;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.math.Vector2f;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Mesh;
-import com.jme3.util.BufferUtils;
 import com.pesegato.MonkeySheet.MSContainer;
 import com.pesegato.MonkeySheet.MSControl;
 import com.pesegato.MonkeySheet.MSMaterialControl;
 import com.pesegato.MonkeySheet.MonkeySheetAppState;
-import com.pesegato.MonkeySheet.quad.SpriteQuad;
+import com.pesegato.MonkeySheet.batch.MSBatcher;
+import com.pesegato.MonkeySheet.batch.SpriteQuad;
 import com.pesegato.goldmonkey.GM;
-
-import java.nio.FloatBuffer;
-
-import static com.jme3.scene.VertexBuffer.Type.*;
 
 
 public class TestBatchedAppState extends BaseAppState {
@@ -26,34 +19,15 @@ public class TestBatchedAppState extends BaseAppState {
 
     public static int SIZE = 50000;
 
-    FloatBuffer posBuffer, msPosBuffer;
-    Mesh mesh;
-    SpriteQuad[] quads;
 
+    MSBatcher msBatcher;
+    SpriteQuad quads[];
 
     @Override
     protected void initialize(Application app) {
 
-
-        mesh = new Mesh();
-        quads = new SpriteQuad[SIZE];
-        Vector2f[] texCoord = new Vector2f[4 * SIZE];
-        int[] indexes = new int[6 * SIZE];
-
-        mesh.setBuffer(Position, 3, BufferUtils.createFloatBuffer(new Vector3f[4 * SIZE]));
-        mesh.setBuffer(TexCoord2, 1, BufferUtils.createFloatBuffer(new float[4 * SIZE]));
-        posBuffer = (FloatBuffer) mesh.getBuffer(Position).getData();
-        msPosBuffer = (FloatBuffer) mesh.getBuffer(TexCoord2).getData();
-        for (int i = 0; i < SIZE; i++) {
-            int j = i / 250;
-            int k = i - j * 250;
-            quads[i] = new SpriteQuad(i, posBuffer, texCoord, indexes, msPosBuffer);
-            quads[i].setPosition(k, j);
-
-        }
-        mesh.setBuffer(TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
-        mesh.setBuffer(Index, 3, BufferUtils.createIntBuffer(indexes));
-        mesh.updateBound();
+        msBatcher=new MSBatcher(SIZE);
+        quads=msBatcher.getQuads();
 
 
         MonkeySheetAppState msa = new MonkeySheetAppState();
@@ -63,8 +37,13 @@ public class TestBatchedAppState extends BaseAppState {
         msa.loadAnim(container, "run");
         msa.loadAnim(container, "idle");
         //Geometry geo = MSAction.createGeometry("spatial", 1f, 1f);
+        for (int i = 0; i < SIZE; i++) {
+            int j = i / 250;
+            int k = i - j * 250;
+            msBatcher.addQuad(i,k,j);
+        }
 
-        geo = new Geometry("monkey", mesh);
+        geo = msBatcher.makeGeo();//new Geometry("monkey", mesh);
 
         msc = new MSControl("run");
         geo.addControl(msc);
@@ -87,7 +66,7 @@ public class TestBatchedAppState extends BaseAppState {
         for (int i = 0; i < SIZE; i++) {
             quads[i].setSFrame((int) (c + i) % 20);
         }
-        mesh.setBuffer(TexCoord2, 1, msPosBuffer);
+        msBatcher.updateAnim();
     }
 
     @Override

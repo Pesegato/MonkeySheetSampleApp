@@ -39,12 +39,7 @@ package batched;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.StatsAppState;
 import com.jme3.app.state.AppState;
-import com.jme3.math.ColorRGBA;
-import com.jme3.scene.Mesh;
-import com.pesegato.MonkeySheet.quad.SpriteQuad;
 import com.pesegato.goldmonkey.GoldMonkeyAppState;
-
-import java.nio.FloatBuffer;
 
 /**
  *
