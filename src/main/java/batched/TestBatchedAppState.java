@@ -8,8 +8,8 @@ import com.pesegato.MonkeySheet.MSContainer;
 import com.pesegato.MonkeySheet.MSControl;
 import com.pesegato.MonkeySheet.MSMaterialControl;
 import com.pesegato.MonkeySheet.MonkeySheetAppState;
-import com.pesegato.MonkeySheet.batch.MSBatcher;
-import com.pesegato.MonkeySheet.batch.SpriteQuad;
+import com.pesegato.MonkeySheet.batch.BGeometry;
+import com.pesegato.MonkeySheet.batch.BNode;
 import com.pesegato.goldmonkey.GM;
 
 
@@ -20,13 +20,13 @@ public class TestBatchedAppState extends BaseAppState {
     public static int SIZE = 50000;
 
 
-    MSBatcher msBatcher;
-    SpriteQuad quads[];
+    BNode msBatcher;
+    BGeometry quads[];
 
     @Override
     protected void initialize(Application app) {
 
-        msBatcher=new MSBatcher(SIZE);
+        msBatcher=new BNode(SIZE);
         quads=msBatcher.getQuads();
 
 
