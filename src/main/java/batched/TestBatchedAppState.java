@@ -11,6 +11,7 @@ import com.pesegato.MonkeySheet.MonkeySheetAppState;
 import com.pesegato.MonkeySheet.batch.BGeometry;
 import com.pesegato.MonkeySheet.batch.BNode;
 import com.pesegato.goldmonkey.GM;
+import com.pesegato.timing.SimpleTimeable;
 
 
 public class TestBatchedAppState extends BaseAppState {
@@ -45,7 +46,7 @@ public class TestBatchedAppState extends BaseAppState {
 
         geo = msBatcher.makeGeo();//new Geometry("monkey", mesh);
 
-        msc = new MSControl("run");
+        msc = new MSControl("run", new SimpleTimeable());
         geo.addControl(msc);
 
         MSMaterialControl msmc = new MSMaterialControl(getApplication().getAssetManager(), geo, container, msc);
@@ -65,8 +66,9 @@ public class TestBatchedAppState extends BaseAppState {
         c += (60 * tpf);
         for (int i = 0; i < SIZE; i++) {
             quads[i].setSFrame((int) (c + i) % 20);
+            quads[i].setAlpha(1);
         }
-        msBatcher.updateAnim();
+        msBatcher.updateData();
     }
 
     @Override
