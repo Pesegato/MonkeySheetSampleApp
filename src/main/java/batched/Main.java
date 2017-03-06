@@ -42,9 +42,7 @@ import com.jme3.app.state.AppState;
 import com.pesegato.goldmonkey.GoldMonkeyAppState;
 
 /**
- *
- *
- *  @author    Pesegato
+ * @author Pesegato
  */
 public class Main extends SimpleApplication {
 
@@ -52,9 +50,10 @@ public class Main extends SimpleApplication {
         super(appstates);
     }
 
-    public static void main( String... args ) {
+    public static void main(String... args) {
 
         Main main = new Main(new GoldMonkeyAppState(false, true, "default"), new TestBatchedAppState(), new StatsAppState());
+        main.setShowSettings(false);
         main.start();
     }
 
