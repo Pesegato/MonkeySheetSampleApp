@@ -10,6 +10,7 @@ import com.pesegato.MonkeySheet.MSMaterialControl;
 import com.pesegato.MonkeySheet.MonkeySheetAppState;
 import com.pesegato.MonkeySheet.actions.MSAction;
 import com.pesegato.goldmonkey.GM;
+import com.pesegato.timing.SimpleTimeable;
 
 /**
  * Created by Pesegato on 08/06/2016.
@@ -28,7 +29,7 @@ public class TestAppState extends BaseAppState {
         msa.loadAnim(container, "run");
         msa.loadAnim(container, "idle");
         Geometry geo = MSAction.createGeometry("spatial", 1f, 1f);
-        msc = new MSControl("run");
+        msc = new MSControl("run", new SimpleTimeable());
         geo.addControl(msc);
         MSMaterialControl msmc = new MSMaterialControl(getApplication().getAssetManager(), geo, container, msc);
         ((SimpleApplication) getApplication()).getGuiNode().attachChild(geo);
@@ -38,18 +39,17 @@ public class TestAppState extends BaseAppState {
     public void update(float tpf) {
         tTPF -= tpf;
         if (tTPF < 2) {
-            if (idling){
+            if (idling) {
                 msc.play("run");
 
-                idling= false;
+                idling = false;
+            }
+        } else {
+            if (!idling) {
+                msc.play("idle");
+                idling = true;
             }
         }
-        else {
-                if (!idling) {
-                    msc.play("idle");
-                    idling = true;
-                }
-            }
         if (tTPF < 0)
             tTPF = 5;
     }
