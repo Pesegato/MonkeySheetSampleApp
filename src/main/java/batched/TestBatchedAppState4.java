@@ -37,9 +37,7 @@ public class TestBatchedAppState4 extends BaseAppState {
         MonkeySheetAppState msa = new MonkeySheetAppState();
         MonkeySheetAppState.setTickDuration(GM.getFloat("anim_tick_duration"));
 
-        MSContainer container = new MSContainer("monkey-guy");
-        msa.loadAnim(container, "run");
-        msa.loadAnim(container, "idle");
+        MSContainer container = msa.initializeContainer("monkey-guy");
         //Geometry geo = MSAction.createGeometry("spatial", 1f, 1f);
         point = msBatcher.addQuad(0, 0);
         point = msBatcher.addQuad(0, 0);

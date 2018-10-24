@@ -25,9 +25,7 @@ public class TestAppState extends BaseAppState {
         MonkeySheetAppState msa = new MonkeySheetAppState();
         MonkeySheetAppState.setTickDuration(GM.getFloat("anim_tick_duration"));
 
-        MSContainer container = new MSContainer("monkey-guy");
-        msa.loadAnim(container, "run");
-        msa.loadAnim(container, "idle");
+        MSContainer container = msa.initializeContainer("monkey-guy");
         Geometry geo = MSAction.createGeometry("spatial", 1f, 1f);
         msc = new MSControl("run", new SimpleTimeable());
         geo.addControl(msc);
@@ -40,13 +38,13 @@ public class TestAppState extends BaseAppState {
         tTPF -= tpf;
         if (tTPF < 2) {
             if (idling) {
-                msc.play("run");
+                msc.playForever("run");
 
                 idling = false;
             }
         } else {
             if (!idling) {
-                msc.play("idle");
+                msc.playForever("idle");
                 idling = true;
             }
         }
